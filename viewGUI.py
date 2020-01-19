@@ -393,6 +393,8 @@ class Ui_MainWindow(QWidget,object):
             print(fileName)
             self.lineEdit.setText(_translate("MainWindow",fileName))
             
+
+            #cp
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
