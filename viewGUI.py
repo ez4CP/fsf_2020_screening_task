@@ -1,112 +1,201 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'gui.ui'
-#
-# Created by: PyQt5 UI code generator 5.14.1
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-import getFileDirectory
+
 from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
+
 from PyQt5.QtGui import QIcon
+from control import *
+
 
 class Ui_MainWindow(QWidget,object):
+
     def setupUi(self, MainWindow):
+
         MainWindow.setObjectName("MainWindow")
+
         MainWindow.resize(1064, 871)
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+
         self.centralwidget.setObjectName("centralwidget")
+
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
+
         self.gridLayout.setObjectName("gridLayout")
+
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+
         self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
+
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+
         self.gridLayout.addItem(spacerItem1, 2, 0, 1, 1)
+
         self.frame = QtWidgets.QFrame(self.centralwidget)
+
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+
         self.frame.setObjectName("frame")
+
         self.gridLayout_5 = QtWidgets.QGridLayout(self.frame)
+
         self.gridLayout_5.setObjectName("gridLayout_5")
+
         self.frame_4 = QtWidgets.QFrame(self.frame)
+
         self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
+
         self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
+
         self.frame_4.setObjectName("frame_4")
+
         self.layoutWidget = QtWidgets.QWidget(self.frame_4)
+
         self.layoutWidget.setGeometry(QtCore.QRect(30, 20, 431, 76))
+
         self.layoutWidget.setObjectName("layoutWidget")
+
         self.gridLayout_6 = QtWidgets.QGridLayout(self.layoutWidget)
+
         self.gridLayout_6.setContentsMargins(0, 0, 0, 0)
+
         self.gridLayout_6.setObjectName("gridLayout_6")
+
         self.horizontalLayout = QtWidgets.QHBoxLayout()
+
         self.horizontalLayout.setObjectName("horizontalLayout")
+
         self.lineEdit = QtWidgets.QLineEdit(self.layoutWidget)
+
         self.lineEdit.setReadOnly(True)
+
         self.lineEdit.setObjectName("lineEdit")
+
         self.horizontalLayout.addWidget(self.lineEdit)
+
         self.toolButton = QtWidgets.QToolButton(self.layoutWidget)
+
         self.toolButton.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+
         self.toolButton.setObjectName("toolButton")
+
         self.toolButton.clicked.connect(self.openFileNameDialog)
 
+
+
         self.horizontalLayout.addWidget(self.toolButton)
+
         self.gridLayout_6.addLayout(self.horizontalLayout, 0, 0, 1, 1)
+
         self.pushButton_2 = QtWidgets.QPushButton(self.layoutWidget)
+
         font = QtGui.QFont()
+
         font.setFamily("Times New Roman")
+
         font.setPointSize(14)
+
         font.setBold(True)
+
         font.setWeight(75)
+
         self.pushButton_2.setFont(font)
+
         self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_2.clicked.connect(MyForm.csvload)
         self.gridLayout_6.addWidget(self.pushButton_2, 1, 0, 1, 1)
+
         self.gridLayout_5.addWidget(self.frame_4, 0, 1, 1, 1)
+
         self.tabWidget_3 = QtWidgets.QTabWidget(self.frame)
+
         font = QtGui.QFont()
+
         font.setFamily("Times New Roman")
+
         font.setPointSize(12)
+
         font.setBold(True)
+
         font.setItalic(False)
+
         font.setWeight(75)
+
         self.tabWidget_3.setFont(font)
+
         self.tabWidget_3.setDocumentMode(False)
+
         self.tabWidget_3.setMovable(True)
+
         self.tabWidget_3.setObjectName("tabWidget_3")
+
         self.tabWidget_3Page1 = QtWidgets.QWidget()
+
         self.tabWidget_3Page1.setObjectName("tabWidget_3Page1")
+
         self.gridLayout_2 = QtWidgets.QGridLayout(self.tabWidget_3Page1)
+
         self.gridLayout_2.setObjectName("gridLayout_2")
+
         self.tableWidget = QtWidgets.QTableWidget(self.tabWidget_3Page1)
+
         self.tableWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+
         self.tableWidget.setWordWrap(True)
+
         self.tableWidget.setRowCount(50)
+
         self.tableWidget.setColumnCount(7)
+
         self.tableWidget.setObjectName("tableWidget")
+
         item = QtWidgets.QTableWidgetItem()
+
         font = QtGui.QFont()
+
         font.setBold(True)
+
         font.setWeight(75)
+
         item.setFont(font)
+
         self.tableWidget.setHorizontalHeaderItem(0, item)
+
         item = QtWidgets.QTableWidgetItem()
+
         font = QtGui.QFont()
+
         font.setBold(True)
+
         font.setWeight(75)
+
         item.setFont(font)
+
         self.tableWidget.setHorizontalHeaderItem(1, item)
+
         item = QtWidgets.QTableWidgetItem()
+
         font = QtGui.QFont()
+
         font.setBold(True)
+
         font.setWeight(75)
+
         item.setFont(font)
+
         self.tableWidget.setHorizontalHeaderItem(2, item)
+
         item = QtWidgets.QTableWidgetItem()
+
         font = QtGui.QFont()
+
         font.setBold(True)
+
         font.setWeight(75)
+
         item.setFont(font)
+
         self.tableWidget.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -382,7 +471,9 @@ class Ui_MainWindow(QWidget,object):
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_3), _translate("MainWindow", "CleatAngle"))
         self.pushButton.setText(_translate("MainWindow", "VALIDATE"))
         self.pushButton_3.setText(_translate("MainWindow", "SUBMIT"))
+
     
+
     def openFileNameDialog(self):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -392,9 +483,7 @@ class Ui_MainWindow(QWidget,object):
         if fileName:
             print(fileName)
             self.lineEdit.setText(_translate("MainWindow",fileName))
-            
 
-            #cp
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
