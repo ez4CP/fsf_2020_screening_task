@@ -76,11 +76,11 @@ class Ui_MainWindow(QWidget,object):
 
         self.toolButton = QtWidgets.QToolButton(self.layoutWidget)
 
-        self.toolButton.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        #self.toolButton.setPopupMode(QtWidgets.QToolButton.InstantPopup)
 
         self.toolButton.setObjectName("toolButton")
 
-        self.toolButton.clicked.connect(self.openFileNameDialog)
+        
 
 
 
@@ -103,7 +103,7 @@ class Ui_MainWindow(QWidget,object):
         self.pushButton_2.setFont(font)
 
         self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_2.clicked.connect(MyForm.csvload)
+        
         self.gridLayout_6.addWidget(self.pushButton_2, 1, 0, 1, 1)
 
         self.gridLayout_5.addWidget(self.frame_4, 0, 1, 1, 1)
@@ -474,15 +474,7 @@ class Ui_MainWindow(QWidget,object):
 
     
 
-    def openFileNameDialog(self):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;Python Files (*.py)", options=options)
-        if fileName:
-            print(fileName)
-            self.lineEdit.setText(_translate("MainWindow",fileName))
+    
 
 if __name__ == "__main__":
     import sys

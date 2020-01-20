@@ -2,19 +2,21 @@
 
 import csv 
 import sys
-from PyQt5.QtWidgets import QDialog, QApplication
+from PyQt5.QtWidgets import QDialog, QApplication,QMainWindow,QFileDialog
 from viewGUI import *
 
     
  
-class MyForm(QDialog):
+class MyForm(QMainWindow):
 
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.pushButton_2.clicked.connect(self.csvload)
+        self.ui.toolButton.clicked.connect(self.openFileNameDialog)
         self.show()
+
     def csvload(self):
         filename = "fin.csv"
           
@@ -51,9 +53,20 @@ class MyForm(QDialog):
                     break
                 print("%10s"%col), 
             print('\n') 
+
+    def openFileNameDialog(self,MainWindow):
+
+        
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;Python Files (*.py)", options=options)
+        if fileName:
+            print(fileName)
+            self.ui.lineEdit.setText(fileName)
    
  
-if __name__=="__main__":   
+if __name__=="__main__": 
+
     app = QApplication(sys.argv)
     w = MyForm()
     w.show()
