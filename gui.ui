@@ -129,7 +129,7 @@
           </font>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>1</number>
          </property>
          <property name="documentMode">
           <bool>false</bool>
@@ -220,7 +220,8 @@
              <row/>
              <column>
               <property name="text">
-               <string>ID</string>
+               <string>ID
+</string>
               </property>
               <property name="font">
                <font>
@@ -376,7 +377,8 @@
              <row/>
              <column>
               <property name="text">
-               <string>ID</string>
+               <string>ID
+</string>
               </property>
               <property name="font">
                <font>
@@ -444,7 +446,7 @@
               <number>50</number>
              </property>
              <property name="columnCount">
-              <number>5</number>
+              <number>8</number>
              </property>
              <attribute name="horizontalHeaderDefaultSectionSize">
               <number>250</number>
@@ -554,6 +556,42 @@
                </font>
               </property>
              </column>
+             <column>
+              <property name="text">
+               <string>Bolt diameter
+</string>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Bolt grade
+</string>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Plate thickness
+</string>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+             </column>
             </widget>
            </item>
           </layout>
@@ -626,7 +664,8 @@
              <row/>
              <column>
               <property name="text">
-               <string>ID</string>
+               <string>ID
+</string>
               </property>
               <property name="font">
                <font>

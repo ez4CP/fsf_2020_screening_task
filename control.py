@@ -2,9 +2,9 @@
 
 import csv 
 import sys
-from PyQt5.QtWidgets import QDialog, QApplication,QMainWindow,QFileDialog
+from PyQt5.QtWidgets import QDialog, QApplication,QMainWindow,QFileDialog,QTableWidgetItem
 from viewGUI import *
-
+import xlrd
     
  
 class MyForm(QMainWindow):
@@ -13,7 +13,7 @@ class MyForm(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.pushButton_2.clicked.connect(self.csvload)
+        self.ui.pushButton_2.clicked.connect(self.excel)
         self.ui.toolButton.clicked.connect(self.openFileNameDialog)
         self.show()
 
@@ -63,6 +63,37 @@ class MyForm(QMainWindow):
         if fileName:
             print(fileName)
             self.ui.lineEdit.setText(fileName)
+
+    def excel(self,MainWindow):
+        book = xlrd.open_workbook("C:/Users/ypate/fsf_2020_screening_task/input_fin.xlsx")
+        sheet = book.sheets()[0] 
+        shName=["FinPlate","TensionMember","BCEndPlate","CleatAngle"]
+        shCol=[7,5,8,7]
+        data = [] 
+        print(shName[0])
+        for k in range(len(shName)):
+            sheet = book.sheet_by_name(shName[k])
+            #sheet = book.sheet_by_index(1) 
+            print(shName[k])
+            r = sheet.row(0) 
+            c = sheet.col_values(0) 
+            
+            
+            for i in range(sheet.nrows):
+              data.append(sheet.row_values(i))
+            print(data)
+            for cp in range(1,len(data)):
+                for gtr in range(shCol[k]):
+                    newitem = QTableWidgetItem(str(data[cp][gtr]))
+                    if k==0:
+                        self.ui.tableWidget.setItem(cp,gtr,newitem)
+                    if k==1:
+                        self.ui.tableWidget_2.setItem(cp,gtr,newitem)
+                    if k==2:
+                        self.ui.tableWidget_3.setItem(cp,gtr,newitem)
+                    if k==3:
+                        self.ui.tableWidget_4.setItem(cp,gtr,newitem)
+            data.clear()
    
  
 if __name__=="__main__": 
