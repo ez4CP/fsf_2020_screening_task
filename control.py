@@ -148,11 +148,12 @@ class MyForm(QMainWindow):
     def cp_submit(self,MainWindow):
         shCol=[7,5,8,7]
         shN=["tableWidget","tableWidget_2","tableWidget_3","tableWidget_4"]
-        
+        sheetname=["FinPlate","TensionMember","BCEndPlate","CleatAngle"]
         p=0
         j=0
         dictionary={}
         for i in range(len(shCol)):  
+            count=0
             table = (self.findChild(QTableWidget,shN[i]))  
             for p in range(table.rowCount()):
                 for j in range(shCol[i]):
@@ -163,12 +164,14 @@ class MyForm(QMainWindow):
                     value=(table.item(p,j).text())
                     dictionary[str(key)]=value
                 if dictionary!={}:
+                    count+=1
+                    name_file=sheetname[i]+"_"+str(count)+".txt"
                     print(json.dumps(dictionary))
-                    self.cp_createfile(dictionary)
+                    self.cp_createfile(dictionary,name_file)
                 dictionary.clear()
-    def cp_createfile(self,dictionary):
-        f = open("demofile3.txt", "w")
-        f.write(json.dumps(dictionary))
+    def cp_createfile(self,dictionary,name_file):
+        f = open(name_file, "w")
+        f.write(str(json.dumps(dictionary)).replace("{","").replace("}", ""))
         f.close()
  
 if __name__=="__main__": 
