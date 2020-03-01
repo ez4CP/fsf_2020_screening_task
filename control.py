@@ -8,7 +8,7 @@ import xlrd
     
  
 class MyForm(QMainWindow):
-
+    validate=0
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
@@ -25,7 +25,8 @@ class MyForm(QMainWindow):
         # initializing the titles and rows list 
         fields = [] 
         rows = [] 
-          
+        shCol=[7,5,8,7]
+        k=0
         # reading csv file 
         with open(filename, 'r') as csvfile: 
             # creating a csv reader object 
@@ -42,10 +43,10 @@ class MyForm(QMainWindow):
           
             # get total number of rows 
             print("Total no. of rows: %d"%(csvreader.line_num)) 
-          
-        # printing the field names 
+            # printing the field names 
         print('Field names are:' + ', '.join(field for field in fields))
-        
+        k=self.cp_detect(fields)
+        print(k)
         #  printing first 5 rows 
         data=[]
         print('\nFirst 5 rows are:\n') 
@@ -65,9 +66,21 @@ class MyForm(QMainWindow):
                     newitem = QTableWidgetItem(str(col))
                 else:
                     newitem = QTableWidgetItem(str(col))
-                
-                self.ui.tableWidget.setRowCount(len(data)+50)
-                self.ui.tableWidget.setItem(r,c,newitem)
+                    
+                if k==0:
+                    self.ui.tableWidget.setRowCount(len(data)+50)
+                    self.ui.tableWidget.setItem(r,c,newitem)
+
+                if k==1:
+                    self.ui.tableWidget_2.setRowCount(len(data)+50)
+                    self.ui.tableWidget_2.setItem(r,c,newitem)
+
+                if k==2:
+                    self.ui.tableWidget_2.setRowCount(len(data)+50)
+                    self.ui.tableWidget.setItem(r,c,newitem)                    
+                if k==3:
+                    self.ui.tableWidget_2.setRowCount(len(data)+50)
+                    self.ui.tableWidget_2.setItem(r,c,newitem)                        
                 c+=1
 
             # maindata.append(data)
@@ -86,6 +99,16 @@ class MyForm(QMainWindow):
         #             self.ui.tableWidget.setItem(cp,gtr,newitem)
                     
         #     data.clear() 
+    def cp_detect(self,fields):
+        if 'Connection type' in fields:
+            return 0
+        elif 'Member length' in fields:
+            return 1
+        elif 'End plate type' in fields:
+            return 2
+        elif 'Angle leg 1' in fields:
+            return 3
+        return 0
     def openFileNameDialog(self,MainWindow):
 
         
@@ -120,23 +143,23 @@ class MyForm(QMainWindow):
                     
                     for i in range(sheet.nrows):
                       data.append(sheet.row_values(i))
-                      print(data)
+                    ko=self.cp_detect(data[0])
                     for cp in range(1,len(data)):
                         for gtr in range(shCol[k]):
                             if gtr==0:
                                 newitem = QTableWidgetItem(str(int(data[cp][gtr])))
                             else:
                                 newitem = QTableWidgetItem(str((data[cp][gtr])))
-                            if k==0:
+                            if ko==0:
                                 self.ui.tableWidget.setRowCount(len(data)+50)
                                 self.ui.tableWidget.setItem(cp,gtr,newitem)
-                            if k==1:
+                            if ko==1:
                                 self.ui.tableWidget_2.setRowCount(len(data)+50)
                                 self.ui.tableWidget_2.setItem(cp,gtr,newitem)
-                            if k==2:
+                            if ko==2:
                                 self.ui.tableWidget_3.setRowCount(len(data)+50)
                                 self.ui.tableWidget_3.setItem(cp,gtr,newitem)
-                            if k==3:
+                            if ko==3:
                                 self.ui.tableWidget_4.setRowCount(len(data)+50)
                                 self.ui.tableWidget_4.setItem(cp,gtr,newitem)
                     data.clear()
@@ -162,6 +185,8 @@ class MyForm(QMainWindow):
                         msg.setWindowTitle("WARNING")
                         msg.setText("Enter Float or int")
                         x = msg.exec_()  # this will show our messagebox
+                        return
+        self.validate=1
         self.cp_valUniq(shCol,shN)
         
 
@@ -182,29 +207,39 @@ class MyForm(QMainWindow):
             index.clear()
 
     def cp_submit(self,MainWindow):
-        shCol=[7,5,8,7]
-        shN=["tableWidget","tableWidget_2","tableWidget_3","tableWidget_4"]
-        sheetname=["FinPlate","TensionMember","BCEndPlate","CleatAngle"]
-        p=0
-        j=0
-        dictionary={}
-        for i in range(len(shCol)):  
-            count=0
-            table = (self.findChild(QTableWidget,shN[i]))  
-            for p in range(table.rowCount()):
-                for j in range(shCol[i]):
-                    if(table.item(p,j)==None):
-                        continue
-                    
-                    key=table.horizontalHeaderItem(j).text().rstrip()
-                    value=(table.item(p,j).text())
-                    dictionary[str(key)]=value
-                if dictionary!={}:
-                    count+=1
-                    name_file=sheetname[i]+"_"+str(count)+".txt"
-                    print(json.dumps(dictionary))
-                    self.cp_createfile(dictionary,name_file)
-                dictionary.clear()
+        if self.validate==1:
+            shCol=[7,5,8,7]
+            shN=["tableWidget","tableWidget_2","tableWidget_3","tableWidget_4"]
+            sheetname=["FinPlate","TensionMember","BCEndPlate","CleatAngle"]
+            p=0
+            j=0
+            dictionary={}
+            for i in range(len(shCol)):  
+                count=0
+                table = (self.findChild(QTableWidget,shN[i]))  
+                for p in range(table.rowCount()):
+                    for j in range(shCol[i]):
+                        if(table.item(p,j)==None):
+                            continue
+                        
+                        key=table.horizontalHeaderItem(j).text().rstrip()
+                        value=(table.item(p,j).text())
+                        dictionary[str(key)]=value
+                    if dictionary!={}:
+                        count+=1
+                        name_file=sheetname[i]+"_"+str(count)+".txt"
+                        print(json.dumps(dictionary))
+                        self.cp_createfile(dictionary,name_file)
+                    dictionary.clear()
+            self.validate=0
+        else:
+            msg=QMessageBox()
+            msg.setWindowTitle("WARNING")
+            msg.setText("Please Validate Before Submiting")
+            x = msg.exec_()  # this will show our messagebox
+
+
+
     def cp_createfile(self,dictionary,name_file):
         f = open(name_file, "w")
         f.write(str(json.dumps(dictionary)).replace("{","").replace("}", ""))
