@@ -19,8 +19,8 @@ class MyForm(QMainWindow):
         self.ui.toolButton.clicked.connect(self.openFileNameDialog)
         self.show()
 
-    def csvload(self):
-        filename = "fin.csv"
+    def csvload(self,MainWindow,filename):
+        
           
         # initializing the titles and rows list 
         fields = [] 
@@ -33,7 +33,9 @@ class MyForm(QMainWindow):
               
             # extracting field names through first row 
             fields =next(csvreader) 
-          
+            while('' in fields):
+                fields.remove('')
+            print(len(fields))
             # extracting each data row one by one 
             for row in csvreader: 
                 rows.append(row) 
@@ -42,20 +44,48 @@ class MyForm(QMainWindow):
             print("Total no. of rows: %d"%(csvreader.line_num)) 
           
         # printing the field names 
-        print('Field names are:' + ', '.join(field for field in fields)) 
-          
+        print('Field names are:' + ', '.join(field for field in fields))
+        
         #  printing first 5 rows 
+        data=[]
         print('\nFirst 5 rows are:\n') 
+        r=0
         for row in rows[:csvreader.line_num]: 
             # parsing each column of a row
             count=0
+            c=0
             for col in row:
                 count+=1 
-                if(count==8):
+                if(count>=len(fields)):
+                    r+=1
                     break
-                print("%10s"%col), 
-            print('\n') 
+                data.append(col)
+                print(col)
+                if col==0:
+                    newitem = QTableWidgetItem(str(col))
+                else:
+                    newitem = QTableWidgetItem(str(col))
+                
+                self.ui.tableWidget.setRowCount(len(data)+50)
+                self.ui.tableWidget.setItem(r,c,newitem)
+                c+=1
 
+            # maindata.append(data)
+            # data.clear()
+            
+        # data = []
+        # for i in range(sheet.nrows):
+        #     data.append(sheet.row_values(i))
+        #     for cp in range(1,len(data)):
+        #         for gtr in range(len(fields)):
+        #             if gtr==0:
+        #                 newitem = QTableWidgetItem(str(int(data[cp][gtr])))
+        #             else:
+        #                 newitem = QTableWidgetItem(str((data[cp][gtr])))
+        #             self.ui.tableWidget.setRowCount(len(data)+50)
+        #             self.ui.tableWidget.setItem(cp,gtr,newitem)
+                    
+        #     data.clear() 
     def openFileNameDialog(self,MainWindow):
 
         
@@ -70,40 +100,46 @@ class MyForm(QMainWindow):
     def excel(self,MainWindow):
         if(self.ui.lineEdit.text()==""):
             self.openFileNameDialog(self)
-        filen=self.ui.lineEdit.text()
-        book = xlrd.open_workbook(filen)
-        sheet = book.sheets()[0] 
-        shName=["FinPlate","TensionMember","BCEndPlate","CleatAngle"]
-        shCol=[7,5,8,7]
-        data = [] 
-        for k in range(len(shName)):
-            sheet = book.sheet_by_name(shName[k])
-            #sheet = book.sheet_by_index(1) 
-            r = sheet.row(0) 
-            c = sheet.col_values(0) 
-            
-            
-            for i in range(sheet.nrows):
-              data.append(sheet.row_values(i))
-            for cp in range(1,len(data)):
-                for gtr in range(shCol[k]):
-                    if gtr==0:
-                        newitem = QTableWidgetItem(str(int(data[cp][gtr])))
-                    else:
-                        newitem = QTableWidgetItem(str((data[cp][gtr])))
-                    if k==0:
-                        self.ui.tableWidget.setRowCount(len(data)+50)
-                        self.ui.tableWidget.setItem(cp,gtr,newitem)
-                    if k==1:
-                        self.ui.tableWidget_2.setRowCount(len(data)+50)
-                        self.ui.tableWidget_2.setItem(cp,gtr,newitem)
-                    if k==2:
-                        self.ui.tableWidget_3.setRowCount(len(data)+50)
-                        self.ui.tableWidget_3.setItem(cp,gtr,newitem)
-                    if k==3:
-                        self.ui.tableWidget_4.setRowCount(len(data)+50)
-                        self.ui.tableWidget_4.setItem(cp,gtr,newitem)
-            data.clear()
+        textstring=self.ui.lineEdit.text()    
+        if(textstring[len(textstring)-4:len(textstring)]=='.csv') or (textstring[len(textstring)-5:len(textstring)]=='.xlsx'):
+            if(textstring[len(textstring)-4:len(textstring)]=='.csv'):
+                self.csvload(self,textstring)
+            else:
+                filen=self.ui.lineEdit.text()
+                book = xlrd.open_workbook(filen)
+                sheet = book.sheets()[0] 
+                shName=["FinPlate","TensionMember","BCEndPlate","CleatAngle"]
+                shCol=[7,5,8,7]
+                data = [] 
+                for k in range(len(shName)):
+                    sheet = book.sheet_by_name(shName[k])
+                    #sheet = book.sheet_by_index(1) 
+                    r = sheet.row(0) 
+                    c = sheet.col_values(0) 
+                    
+                    
+                    for i in range(sheet.nrows):
+                      data.append(sheet.row_values(i))
+                      print(data)
+                    for cp in range(1,len(data)):
+                        for gtr in range(shCol[k]):
+                            if gtr==0:
+                                newitem = QTableWidgetItem(str(int(data[cp][gtr])))
+                            else:
+                                newitem = QTableWidgetItem(str((data[cp][gtr])))
+                            if k==0:
+                                self.ui.tableWidget.setRowCount(len(data)+50)
+                                self.ui.tableWidget.setItem(cp,gtr,newitem)
+                            if k==1:
+                                self.ui.tableWidget_2.setRowCount(len(data)+50)
+                                self.ui.tableWidget_2.setItem(cp,gtr,newitem)
+                            if k==2:
+                                self.ui.tableWidget_3.setRowCount(len(data)+50)
+                                self.ui.tableWidget_3.setItem(cp,gtr,newitem)
+                            if k==3:
+                                self.ui.tableWidget_4.setRowCount(len(data)+50)
+                                self.ui.tableWidget_4.setItem(cp,gtr,newitem)
+                    data.clear()
     def cp_validate(self,MainWindow):
         shCol=[7,5,8,7]
         shN=["tableWidget","tableWidget_2","tableWidget_3","tableWidget_4"]
