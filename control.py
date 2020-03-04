@@ -9,6 +9,7 @@ import xlrd
  
 class MyForm(QMainWindow):
     validate=0
+    openD=0
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
@@ -118,11 +119,16 @@ class MyForm(QMainWindow):
         if fileName:
             print(fileName)
             self.ui.lineEdit.setText(fileName)
+            self.openD=1
 
 
     def excel(self,MainWindow):
-        if(self.ui.lineEdit.text()==""):
-            self.openFileNameDialog(self)
+        if(self.ui.lineEdit.text()=="") or self.openD==0:
+            try:
+                self.openFileNameDialog(self)
+            except:
+                self.openD=0
+        self.openD=0
         textstring=self.ui.lineEdit.text()    
         if(textstring[len(textstring)-4:len(textstring)]=='.csv') or (textstring[len(textstring)-5:len(textstring)]=='.xlsx'):
             if(textstring[len(textstring)-4:len(textstring)]=='.csv'):
