@@ -25,10 +25,15 @@ class MyForm(QMainWindow):
 
     def onChange(self,i): #changed!
         noter=0
+        print(self.dataExcel)
         self.ui.note_table.clear()
-        for j in range(1,len(self.dataExcel[i])):
-            self.addNote(self,len(self.dataExcel[i][0]),self.dataExcel[i][j],noter)
-            noter+=1
+        try:
+
+            for j in range(1,len(self.dataExcel[i])):
+                self.addNote(self,len(self.dataExcel[i][0]),self.dataExcel[i][j],noter)
+                noter+=1
+        except:
+            pass
 
 
     def addNote(self,MainWindow,x,list,noter):
@@ -74,7 +79,8 @@ class MyForm(QMainWindow):
             for row in csvreader: 
                 rows.append(row)
                 row.remove("")
-                if(len(row)>len(fields)):
+                self.dataExcel.append(rows)
+                if(len(row)>shCol[k]):
                     self.addNote(self,shCol[k],row,noter)
                     noter+=1 
 
@@ -134,6 +140,7 @@ class MyForm(QMainWindow):
 
 
     def excel(self,MainWindow):
+        self.dataExcel.clear()
         self.clear_all(self)
         if(self.ui.lineEdit.text()=="") or self.openD==0:
             try:

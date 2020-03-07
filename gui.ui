@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1772</width>
+    <width>1615</width>
     <height>989</height>
    </rect>
   </property>
@@ -26,8 +26,8 @@
       <widget class="QTabWidget" name="tabWidget_3">
        <property name="geometry">
         <rect>
-         <x>140</x>
-         <y>240</y>
+         <x>40</x>
+         <y>230</y>
          <width>1551</width>
          <height>711</height>
         </rect>
@@ -677,7 +677,7 @@
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>40</x>
          <y>10</y>
          <width>1551</width>
          <height>211</height>
@@ -872,22 +872,6 @@
       </widget>
      </widget>
     </item>
-    <item row="0" column="2">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -895,7 +879,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1772</width>
+     <width>1615</width>
      <height>26</height>
     </rect>
    </property>
