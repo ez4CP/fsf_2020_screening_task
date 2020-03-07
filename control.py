@@ -32,15 +32,17 @@ class MyForm(QMainWindow):
 
 
     def addNote(self,MainWindow,x,list,noter):
+        shCol=[7,5,8,7]
+        curr=self.ui.tabWidget_3.currentIndex()
         try:
             notec=0
             
-            newitem = QTableWidgetItem(str(list[x]))
+            newitem = QTableWidgetItem(str(list[shCol[curr]]))
             newitem.setFlags(QtCore.Qt.ItemIsEnabled)
             self.ui.note_table.setItem(noter,notec,newitem)
 
             notec+=1
-            newitem = QTableWidgetItem(str(list[x+1]))
+            newitem = QTableWidgetItem(str(list[shCol[curr]+1]))
             newitem.setFlags(QtCore.Qt.ItemIsEnabled)
             self.ui.note_table.setItem(noter,notec,newitem)
         except:
@@ -76,10 +78,6 @@ class MyForm(QMainWindow):
                     self.addNote(self,shCol[k],row,noter)
                     noter+=1 
 
-          
-            # get total number of rows 
-            
-        #  printing first 5 rows 
         data=[]
         r=0
         for row in rows[:csvreader.line_num]: 
@@ -156,7 +154,6 @@ class MyForm(QMainWindow):
                 data = [] 
                 for k in range(len(shName)):
                     sheet = book.sheet_by_name(shName[k])
-                    #sheet = book.sheet_by_index(1) 
                     r = sheet.row(0) 
                     c = sheet.col_values(0) 
                     
@@ -307,6 +304,5 @@ if __name__=="__main__":
     w = MyForm()
     w.show()
     sys.exit(app.exec_())
-# csv file name 
 
     
