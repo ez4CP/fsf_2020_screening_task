@@ -1,0 +1,6 @@
+ID,Connection type,Axial load,Shear load,Bolt diameter,Bolt grade,Plate thickness,,,
+1,1,50,60,22,4.8,12,,Note:,
+2,1,70,60,26,8.8,14,,Connection type,Description
+3,2,100,80,24,4.6,16,,1,Column flange - Beam web
+4,2,120,80,22,10.8,14,,2,Column web - Beam web
+5,3,120,60,26,4.8,12,,3,Beam - Beam
